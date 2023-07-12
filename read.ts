@@ -13,5 +13,9 @@ const blob = new Blob([bytes], {
     type: "application/json;charset=utf-8"
 });
 
+for (let i of str) {
+    console.log(i)
+}
+
 
 console.log('blob:', blob)
