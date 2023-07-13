@@ -1,4 +1,5 @@
-async function main() {
+async function main(workbook: ExcelScript.Workbook) {
+    let sheet = workbook.getActiveWorksheet();
 
     var requestOptions: RequestInit = {
         method: 'POST',
@@ -8,14 +9,19 @@ async function main() {
 
     try {
         // dev link works
-        const response = await fetch("https://us-central1-lloop-debug.cloudfunctions.net/gps/legacy-contract/get-all-legacy-contracts?token=cHJpZGVHcm91cEVudGVycHJpc2U=&timeStamp=2023-07-11T14:17:11.493Z", requestOptions);
+        const response = await fetch("https://us-central1-lloop-debug.cloudfunctions.net/gps/legacy-contract/get-all-legacy-contracts?token=cHJpZGVHcm91cEVudGVycHJpc2U=", requestOptions);
 
 
       // production link (works on default timeStamp + 2023-07-01 + 2023-06-21)
-      // const response = await fetch("https://us-central1-lloop-21cf0.cloudfunctions.net/gps/legacy-contract/get-all-legacy-contracts?token=cHJpZGVHcm91cEVudGVycHJpc2UtcHJvZA==&timeStamp=2023-07-01T14:17:11.493Z", requestOptions);
+      // const response = await fetch("https://us-central1-lloop-21cf0.cloudfunctions.net/gps/legacy-contract/get-all-legacy-contracts?token=cHJpZGVHcm91cEVudGVycHJpc2UtcHJvZA==&timeStamp=2023-07-11T14:17:11.493Z", requestOptions);
 
+        let raw: MainData = await response.json(); // convert reponse to JSON
+        let bufferData: ArrayBuffer = raw['data'];
 
-        let json: MainData = await response.json(); // convert reponse to JSON
+        const buffer = new Uint8Array(bufferData);
+        const jsonString = new TextDecoder().decode(buffer);
+        const json: MainData = JSON.parse(jsonString);
+
 
         let listData: Array<MainData> = [];
         // type MainData = Object[]; // make map method available
@@ -25,11 +31,29 @@ async function main() {
         }
 
         // test logs
-        console.log('raw output:', JSON.stringify(json));
+        console.log('raw output :', bufferData);
         console.log('array:', listData)
+        console.log(sheet.getName());
+
+        // JSON --> TABLE
+
+        // Determine the data's shape by getting the properties in one object.
+        // This assumes all the JSON objects have the same properties.
+        const columnNames = getPropertiesFromJson(listData[0]);
+
+        // Create the table headers using the property names.
+        const headerRange = sheet.getRangeByIndexes(0, 0, 1, columnNames.length);
+        headerRange.setValues([columnNames]);
+
+        // Create a new table with the headers.
+        const newTable = sheet.addTable(headerRange, true);
+
+        // Add each object in the array of JSON objects to the table.
+      const tableValues = listData.map(row => convertJsonToRow(row));
+        newTable.addRows(-1, tableValues);
 
     } catch (error) {
-        console.log('Error:', error);
+        console.log('Error...:', error);
     }
 }
 
