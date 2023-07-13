@@ -8,6 +8,10 @@ async function main(workbook: ExcelScript.Workbook) {
         redirect: 'follow' as RequestRedirect, // Cast the string to RequestRedirect enum type
     };
     try {
+        linkMap: Object = {
+            devLink: 'dev-link',
+            prodLink: 'prod-link'
+        }
         // dev link works
         const response = await fetch("dev-link", requestOptions);
 
