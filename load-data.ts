@@ -1,5 +1,7 @@
+// Node.JS script works
+
 import {Blob} from 'node:buffer';
-const fs = require('fs'); // import module was an error
+import * as fs from 'fs';
 
 const jsonString = fs.readFileSync('./data/sample-response.json', 'utf-8');
 const jsonData = JSON.parse(jsonString);
