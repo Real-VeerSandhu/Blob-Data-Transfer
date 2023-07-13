@@ -1,29 +1,32 @@
-const Blob = require('node:buffer');
-const fs = require('fs'); // import module was an error
+import {Blob} from 'node:buffer';
 
-const jsonString = fs.readFileSync('./data/sample-response.json', 'utf-8');
-const jsonData = JSON.parse(jsonString);
+function readBlob(blob: Blob): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          resolve(reader.result);
+        } else {
+          reject(new Error('Failed to read Blob as a string.'));
+        }
+      };
+  
+      reader.onerror = () => {
+        reject(new Error('Error reading Blob.'));
+      };
+  
+      reader.readAsText(blob);
+    });
+  }
+  
+// Usage example
+const blob = new Blob(['Hello, world!'], { type: 'text/plain' });
 
-// console.log(jsonData);
-// console.log(typeof jsonData);
-
-const str = JSON.stringify(jsonData);
-const bytes = new TextEncoder().encode(str);
-
-console.log('Bytes:', bytes);
-
-
-const blob = new Blob([bytes], {
-    type: "application/json;charset=utf-8"
+readBlob(blob)
+.then((content) => {
+    console.log(content);
+})
+.catch((error) => {
+    console.error(error);
 });
-
-// for (let i of str) {
-//     console.log(i)
-// }
-
-
-console.log('blob:', blob)
-
-/**
- * 
- */
