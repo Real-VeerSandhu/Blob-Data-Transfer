@@ -24,4 +24,15 @@ const blob = new Blob([bytes], {
 // }
 
 
-console.log('blob:', blob)
+let reader = new FileReader();
+
+// This fires after the blob has been read/loaded.
+reader.addEventListener('loadend', (e) => {
+  const text = e.srcElement.result;
+  console.log(text);
+});
+
+// Start reading the blob as text.
+reader.readAsText(blob);
+
+

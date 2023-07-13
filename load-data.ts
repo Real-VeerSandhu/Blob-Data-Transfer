@@ -2,6 +2,7 @@
 
 import {Blob} from 'node:buffer';
 import * as fs from 'fs';
+import { log } from '../../node_modules/@grpc/grpc-js/build/src/logging';
 
 const jsonString = fs.readFileSync('./data/sample-response.json', 'utf-8');
 const jsonData = JSON.parse(jsonString);
@@ -23,5 +24,13 @@ const blob = new Blob([bytes], {
 //     console.log(i)
 // }
 
+console.log('blob before:', blob)
 
-console.log('blob:', blob)
+const x = blob.stream()
+
+for await (const chunk of x) {
+    // Do something with each 'chunk'
+  }
+
+console.log('blob after text:', blob.text())
+
