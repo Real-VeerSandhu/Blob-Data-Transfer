@@ -1,3 +1,5 @@
+// Node.JS script works
+
 import {Blob} from 'node:buffer';
 import * as fs from 'fs';
 
