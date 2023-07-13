@@ -13,11 +13,11 @@ async function main(workbook: ExcelScript.Workbook) {
             prodLink: 'prod-link'
         }
         // dev link works
-        const response = await fetch("dev-link", requestOptions);
+        const response = await fetch(linkMap['devLink'], requestOptions);
 
 
       // production link (works on default timeStamp + 2023-07-01 + 2023-06-21)
-      // const response = await fetch("prod-link", requestOptions);
+      // const response = await fetch("linkMap['devLink'", requestOptions);
 
         let raw: MainData = await response.json(); // convert reponse to JSON
         let bufferData: ArrayBuffer = raw['data'];
