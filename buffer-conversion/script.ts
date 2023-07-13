@@ -1,3 +1,5 @@
+// Excel script that gets data as a buffer, reads the buffer, and converts it to a table
+
 async function main(workbook: ExcelScript.Workbook) {
     let sheet = workbook.getActiveWorksheet();
 
