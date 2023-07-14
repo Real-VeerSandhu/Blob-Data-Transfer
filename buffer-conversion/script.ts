@@ -22,7 +22,7 @@ async function main(workbook: ExcelScript.Workbook) {
         let raw: MainData = await response.json(); // convert reponse to JSON
         let bufferData: ArrayBuffer = raw['data']; //  get data 
 
-        
+        // conversion
         const buffer = new Uint8Array(bufferData);
         const jsonString = new TextDecoder().decode(buffer);
         const json: MainData = JSON.parse(jsonString);
