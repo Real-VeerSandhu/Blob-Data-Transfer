@@ -34,5 +34,3 @@ reader.addEventListener('loadend', (e) => {
 
 // Start reading the blob as text.
 reader.readAsText(blob);
-
-
