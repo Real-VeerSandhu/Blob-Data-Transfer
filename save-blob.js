@@ -1,4 +1,4 @@
-//
+// Blob script works (NodeJS)
 
 import {Blob} from 'node:buffer';
 
