@@ -16,7 +16,7 @@ function readBlob(blob: Blob): Promise<string> {
         reject(new Error('Error reading Blob.'));
       };
   
-      reader.readAsText(blob);
+      reader.readAsText(blob: Blob);
     });
   }
   
