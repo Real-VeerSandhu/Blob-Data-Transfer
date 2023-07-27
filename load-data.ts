@@ -5,7 +5,6 @@ import * as fs from 'fs';
 
 const jsonString = fs.readFileSync('./data/sample-response.json', 'utf-8');
 const jsonData = JSON.parse(jsonString);
-
 // console.log(jsonData);
 // console.log(typeof jsonData);
 
