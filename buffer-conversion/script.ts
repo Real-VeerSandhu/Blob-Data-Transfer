@@ -163,7 +163,6 @@ function getPropertiesFromJson(obj: object) {
     return propertyArray;
 }
 
-
 /**
  * Transforms fetched JSON into MainData type
  */
