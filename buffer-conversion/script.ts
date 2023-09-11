@@ -62,7 +62,6 @@ async function main(workbook: ExcelScript.Workbook) {
     }
 }
 
-
 /**
  * Interface for API response data
  */
