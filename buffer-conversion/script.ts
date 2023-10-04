@@ -159,7 +159,6 @@ function getPropertiesFromJson(obj: object) {
     for (let property in obj) {
         propertyArray.push(property);
     }
-
     return propertyArray;
 }
 
