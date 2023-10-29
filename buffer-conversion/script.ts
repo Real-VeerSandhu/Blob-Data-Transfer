@@ -162,7 +162,7 @@ function getPropertiesFromJson(obj: object) {
     return propertyArray;
 }
 
-/**
+/** 
  * Transforms fetched JSON into MainData type
  */
 function tObject(input: MainData): MainData {
